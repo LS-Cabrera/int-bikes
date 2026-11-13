@@ -104,6 +104,9 @@ function createCard(rental: Rental): HTMLDivElement {
   const title = document.createElement("h5");
   title.className = "card-title";
   title.textContent = rental.bikeCode;
+  const type = document.createElement("span");
+  type.className = "badge";
+  type.textContent = rental.bikeType;
   const lines = [
     `Tipo: ${BIKE_TYPE_LABELS[rental.bikeType]}`,
     `Cliente: ${rental.customer}`,
@@ -113,7 +116,7 @@ function createCard(rental: Rental): HTMLDivElement {
   if (rental.lateHours > 0) {
     lines.push(`Atraso: ${rental.lateHours} h`);
   }
-  body.append(title, ...lines.map(createText));
+  body.append(title, ...lines.map(createText), type);
   const footer = document.createElement("div");
   footer.className = "card-footer bg-transparent";
   footer.append(createDeleteButton(rental));
