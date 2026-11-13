@@ -14,7 +14,21 @@ export class RentalList {
   }
 
   remove(_bikeCode: string): void {
-    // TODO: eliminar el alquiler de esa bicicleta
+    const exists = this.#items.some((rental) => rental.bikeCode === _bikeCode);
+    const newList: Rental[] = [];
+
+    if (!exists) {
+      throw new Error("La bicicleta no existe.");
+    } else {
+      while (this.#items.length > 0) {
+        const r = this.#items.pop();
+        if (r && r.bikeCode !== _bikeCode) {
+          newList.push(r);
+        }
+      }
+    }
+
+    this.#items = newList;
   }
 
   getItems(): readonly Rental[] {
@@ -39,5 +53,9 @@ export class RentalList {
     }
 
     return total;
+  }
+
+  size(): number {
+    return this.#items.length;
   }
 }
