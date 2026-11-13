@@ -47,13 +47,20 @@ const inpTotalRentals = document.getElementById(
 const inpTotalIncome = document.getElementById(
   "inp-total-income",
 ) as HTMLInputElement | null;
+const inpTotalLateFees = document.getElementById(
+  "inp-total-late-fees",
+) as HTMLInputElement | null;
+const inpLateHours = document.getElementById(
+  "inp-lateHours",
+) as HTMLInputElement | null;
 
 function clearInputs(): void {
-  if (inpCustomer && inpCode && inpHours && inpPrice) {
+  if (inpCustomer && inpCode && inpHours && inpPrice && inpLateHours) {
     inpCustomer.value = "";
     inpCode.value = "";
     inpHours.value = "";
     inpPrice.value = "";
+    inpLateHours.value = "";
   }
 }
 
@@ -133,9 +140,10 @@ function updateListByType(): void {
 }
 
 function updateTotals(): void {
-  if (inpTotalRentals && inpTotalIncome) {
+  if (inpTotalRentals && inpTotalIncome && inpTotalLateFees) {
     inpTotalRentals.value = String(rentalList.getItems().length);
     inpTotalIncome.value = String(rentalList.totalIncome());
+    inpTotalLateFees.value = String(rentalList.totalLateFees());
   }
 }
 
@@ -154,7 +162,15 @@ updateTotals();
 
 selFilterType?.addEventListener("change", updateListByType);
 
-if (btnAdd && inpCustomer && inpCode && selType && inpHours && inpPrice) {
+if (
+  btnAdd &&
+  inpCustomer &&
+  inpCode &&
+  selType &&
+  inpHours &&
+  inpPrice &&
+  inpLateHours
+) {
   btnAdd.addEventListener("click", () => {
     try {
       const rental = new Rental({
@@ -163,6 +179,7 @@ if (btnAdd && inpCustomer && inpCode && selType && inpHours && inpPrice) {
         bikeType: selType.value as BikeType,
         hours: Number(inpHours.value),
         pricePerHour: Number(inpPrice.value),
+        lateHours: Number(inpLateHours.value),
       });
       rentalList.add(rental);
       hideError();
