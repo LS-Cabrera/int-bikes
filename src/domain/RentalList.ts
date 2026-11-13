@@ -30,7 +30,14 @@ export class RentalList {
   }
 
   totalLateFees(): number {
-    // TODO: sumar los recargos por atraso de todos los alquileres
-    return 0;
+    let total = 0;
+
+    for (const r of this.#items) {
+      if (r.lateHours > 0) {
+        total += r.lateHours * r.pricePerHour * 2;
+      }
+    }
+
+    return total;
   }
 }
