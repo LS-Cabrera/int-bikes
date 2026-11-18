@@ -89,7 +89,11 @@ function createDeleteButton(rental: Rental): HTMLButtonElement {
   button.textContent = "Eliminar";
   button.setAttribute("aria-label", `Eliminar ${rental.bikeCode}`);
   button.addEventListener("click", () => {
-    // TODO: eliminar este alquiler y actualizar los paneles
+    rentalList.remove(rental.bikeCode);
+
+    updateList();
+    updateListByType();
+    updateTotals();
   });
   return button;
 }
